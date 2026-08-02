@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Ghowse Books</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            background: #1e272e; /* Admin பக்கத்திற்கான இருண்ட நிறம் (Dark Theme) */
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        /* பாஸ்வேர்டு கேட்கும் பெட்டி */
+        #login-screen {
+            background: #2f3640;
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            width: 100%;
+            max-width: 350px;
+        }
+        #login-screen h2 { color: #fbc531; margin-bottom: 20px; font-size: 22px; }
+        input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            outline: none;
+            text-align: center;
+        }
+        button {
+            background: #4cd137;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            width: 100%;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        button:hover { background: #44bd32; }
+        .error-msg { color: #e84118; font-size: 14px; display: none; margin-top: 10px; }
+
+        /* உள்ளே நுழைந்த பிறகு தெரியும் நிஜ Admin பக்கம் */
+        #admin-panel {
+            display: none; /* ஆரம்பத்தில் மறைக்கப்பட்டிருக்கும் */
+            background: #2f3640;
+            padding: 30px;
+            border-radius: 15px;
+            width: 100%;
+            max-width: 600px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        }
+        .header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #718093; padding-bottom: 15px; margin-bottom: 20px; }
+        .header h1 { color: #00a8ff; font-size: 24px; }
+        .logout-btn { background: #e84118; padding: 8px 15px; border-radius: 5px; font-size: 14px; width: auto; }
+        
+        .admin-card {
+            background: #353b48;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            border-left: 5px solid #fbc531;
+        }
+        .admin-card h3 { color: #fbc531; margin-bottom: 10px; font-size: 18px; }
+        .admin-card p { color: #dcdde1; font-size: 14px; line-height: 1.6; }
+        .action-link {
+            display: inline-block;
+            margin-top: 10px;
+            color: #4cd137;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .action-link:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+
+    <!-- 1. பாஸ்வேர்டு கேட்கும் பகுதி (Login Screen) -->
+    <div id="login-screen">
+        <h2>🔒 Admin Access</h2>
+        <input type="password" id="passInput" placeholder="Enter Password">
+        <button onclick="checkPassword()">Login</button>
+        <p class="error-msg" id="errorText">தவறான பாஸ்வேர்டு!</p>
+    </div>
+
+    <!-- 2. சரியான பாஸ்வேர்டு போட்டால் தெரியும் பகுதி (Admin Panel) -->
+    <div id="admin-panel">
+        <div class="header">
+            <h1>⚙️ Store Admin</h1>
+            <button class="logout-btn" onclick="logout()">Logout</button>
+        </div>
+
+        <div class="admin-card">
+            <h3>📂 PDF ஃபைல்களை மாற்றுவது எப்படி?</h3>
+            <p>புதிய PDF-ஐ சேர்க்க அல்லது பழையதை மாற்ற, உங்களின் GitHub கணக்கிற்குச் சென்று நேரடியாக ஃபைல்களை அப்லோட் (Upload) செய்யவும்.</p>
+            <a href="https://github.com/" target="_blank" class="action-link">Go to GitHub ↗</a>
+        </div>
+
+        <div class="admin-card">
+            <h3>📝 விலை அல்லது புத்தகம் சேர்ப்பது எப்படி?</h3>
+            <p>கடையின் மெயின் பக்கத்தில் புதிய புத்தகங்கள் சேர்க்க, GitHub-ல் உள்ள "index.html" ஃபைலை எடிட் (Edit) செய்யவும்.</p>
+        </div>
+        
+        <!-- நீங்கள் விரும்பினால் இங்கே வாடிக்கையாளர் ஆர்டர் லிஸ்ட் போன்ற குறிப்புகளை நீங்களே டைப் செய்து வைத்துக்கொள்ளலாம் -->
+        <div class="admin-card" style="border-left-color: #9c88ff;">
+            <h3 style="color: #9c88ff;">📌 உங்களின் தனிப்பட்ட குறிப்புகள்</h3>
+            <p>1. இந்த வாரம் 5 புதிய பயான் PDF சேர்க்க வேண்டும்.<br>2. வாடிக்கையாளர் ரபீக்-க்கு புக் அனுப்ப வேண்டும்.</p>
+        </div>
+    </div>
+
+    <!-- பாஸ்வேர்டு சரிபார்க்கும் ஜாவாஸ்கிரிப்ட் (JavaScript) -->
+    <script>
+        // உங்களுக்குப் பிடித்த பாஸ்வேர்டை இங்கே மாற்றிக் கொள்ளுங்கள்!
+        const secretPassword = "786"; 
+
+        function checkPassword() {
+            let userPass = document.getElementById("passInput").value;
+            let error = document.getElementById("errorText");
+            let loginScreen = document.getElementById("login-screen");
+            let adminPanel = document.getElementById("admin-panel");
+
+            if(userPass === secretPassword) {
+                // பாஸ்வேர்டு சரி என்றால்...
+                loginScreen.style.display = "none";
+                adminPanel.style.display = "block";
+            } else {
+                // பாஸ்வேர்டு தவறு என்றால்...
+                error.style.display = "block";
+            }
+        }
+
+        function logout() {
+            // வெளியேற...
+            document.getElementById("passInput").value = "";
+            document.getElementById("errorText").style.display = "none";
+            document.getElementById("admin-panel").style.display = "none";
+            document.getElementById("login-screen").style.display = "block";
+        }
+    </script>
+</body>
+</html>
