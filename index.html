@@ -39,13 +39,15 @@
             display: inline-block;
         }
 
-        /* புத்தகங்களின் பட்டியல் (Buttons) அமைப்பு */
+        /* புத்தகங்களின் பட்டியல் அமைப்பு */
         .book-menu {
             display: flex;
             flex-direction: column;
             gap: 15px;
         }
-        .book-menu a {
+        
+        /* சாதாரண பட்டன்கள் */
+        .book-menu > a {
             text-decoration: none;
             background-color: #2980b9;
             color: white;
@@ -57,10 +59,57 @@
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
             transition: background-color 0.3s, transform 0.2s;
         }
-        /* பட்டன் மீது மவுஸ் வைக்கும்போது நிறம் மாற */
-        .book-menu a:hover {
+        .book-menu > a:hover {
             background-color: #1a5276;
             transform: translateY(-3px);
+        }
+
+        /* Select / Dropdown பட்டன் (Islamic Books-க்கு மட்டும்) */
+        .custom-select {
+            background-color: #2980b9;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: background-color 0.3s;
+            overflow: hidden;
+            text-align: left;
+        }
+        .custom-select summary {
+            padding: 15px 20px;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            list-style: none; /* அம்பு குறியீட்டை மறைக்க */
+            outline: none;
+        }
+        .custom-select summary::-webkit-details-marker {
+            display: none;
+        }
+        .custom-select[open] summary, .custom-select summary:hover {
+            background-color: #1a5276;
+        }
+        
+        /* Dropdown உள்ளே இருக்கும் ஆப்ஷன்கள் (Bayaan, Kavithai...) */
+        .select-options {
+            background-color: #ecf0f1;
+            display: flex;
+            flex-direction: column;
+        }
+        .select-options a {
+            text-decoration: none;
+            color: #2c3e50;
+            padding: 12px 20px;
+            border-bottom: 1px solid #bdc3c7;
+            font-size: 16px;
+            font-weight: 600;
+            transition: background-color 0.2s;
+        }
+        .select-options a:last-child {
+            border-bottom: none;
+        }
+        .select-options a:hover {
+            background-color: #d0d3d4;
+            padding-left: 25px; /* Hover செய்யும்போது லேசாக நகரும் எஃபெக்ட் */
         }
 
         /* தொடர்பு விவரங்கள் */
@@ -85,7 +134,17 @@
         
         <!-- வரிசையான புத்தகங்களின் பட்டன்கள் -->
         <div class="book-menu">
-            <a href="#">📚 Islamic Books</a>
+            
+            <!-- Select Button for Islamic Books -->
+            <details class="custom-select">
+                <summary>📚 Islamic Books ▾</summary>
+                <div class="select-options">
+                    <a href="#">🎙️ Bayaan (பயான்)</a>
+                    <a href="#">✍️ Kavithai (கவிதை)</a>
+                    <a href="#">📖 Kathai (கதை)</a>
+                </div>
+            </details>
+
             <a href="#">📘 Tamil Books</a>
             <a href="#">👶 Kids Books</a>
             <a href="#">📕 School Books</a>
@@ -94,9 +153,10 @@
         <!-- கடை முகவரி மற்றும் தொடர்புக்கு -->
         <div class="contact-info">
             <b>தொடர்புக்கு:</b><br>
-            📞 +9159345783 <br>
+            📞 +91 9159345783 <br>
             ✉️ ghowsebooks@email.com
         </div>
     </div>
 </body>
 </html>
+
