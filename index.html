@@ -1,33 +1,102 @@
-Settings
-↓
-Pages
-↓
-Build and deployment
-↓
-Source → Deploy from a branch
-↓
-Branch → main
-↓
-Folder → / (root)
-↓
-Save
 <!DOCTYPE html>
 <html lang="ta">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ghowse Book Store</title>
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; background-color: #f4f4f4; padding: 50px; }
-        h1 { color: #2c3e50; }
-        p { color: #555; font-size: 18px; }
-        .container { background: white; padding: 30px; border-radius: 10px; box-shadow: 0px 0px 10px gray; display: inline-block; }
+        /* வலைத்தளத்தின் பின்னணி மற்றும் அடிப்படை அமைப்பு */
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            text-align: center; 
+            background-color: #f0f2f5; 
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        /* வெள்ளை நிற பெட்டி அமைப்பு */
+        .container { 
+            background: white; 
+            padding: 30px; 
+            border-radius: 15px; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
+            width: 100%;
+            max-width: 400px;
+        }
+        /* தலைப்பு எழுத்துக்கள் */
+        h1 { color: #2c3e50; margin-bottom: 5px; font-size: 28px; }
+        p.subtitle { color: #7f8c8d; font-size: 15px; margin-top: 0; margin-bottom: 25px; }
+        
+        /* 🛍️ Books பார்க்கவும் - தலைப்பு அமைப்பு */
+        .section-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #d35400;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px dashed #e67e22;
+            display: inline-block;
+        }
+
+        /* புத்தகங்களின் பட்டியல் (Buttons) அமைப்பு */
+        .book-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .book-menu a {
+            text-decoration: none;
+            background-color: #2980b9;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: left;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        /* பட்டன் மீது மவுஸ் வைக்கும்போது நிறம் மாற */
+        .book-menu a:hover {
+            background-color: #1a5276;
+            transform: translateY(-3px);
+        }
+
+        /* தொடர்பு விவரங்கள் */
+        .contact-info {
+            margin-top: 35px;
+            font-size: 15px;
+            color: #555;
+            border-top: 1px solid #ddd;
+            padding-top: 20px;
+            line-height: 1.6;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Ghowse Book Store-க்கு வரவேற்கிறோம்!</h1>
-        <p>சிறந்த புத்தகங்கள், குறைவான விலையில்.</p>
-        <p>தொடர்புக்கு: ghowsebooks@email.com (உங்கள் இமெயிலை மாற்றிக்கொள்ளவும்)</p>
+        <!-- கடையின் பெயர் -->
+        <h1>Ghowse Book Store</h1>
+        <p class="subtitle">சிறந்த புத்தகங்கள், குறைவான விலையில்!</p>
+        
+        <!-- புத்தகங்கள் தலைப்பு -->
+        <div class="section-title">🛍️ Books பார்க்கவும்</div>
+        
+        <!-- வரிசையான புத்தகங்களின் பட்டன்கள் -->
+        <div class="book-menu">
+            <a href="#">📚 Islamic Books</a>
+            <a href="#">📘 Tamil Books</a>
+            <a href="#">👶 Kids Books</a>
+            <a href="#">📕 School Books</a>
+        </div>
+
+        <!-- கடை முகவரி மற்றும் தொடர்புக்கு -->
+        <div class="contact-info">
+            <b>தொடர்புக்கு:</b><br>
+            📞 +91 98765 43210 <br>
+            ✉️ ghowsebooks@email.com
+        </div>
     </div>
 </body>
 </html>
