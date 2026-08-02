@@ -17,24 +17,23 @@
         button:hover { background: #44bd32; }
         .error-msg { color: #e84118; font-size: 14px; display: none; margin-top: 10px; }
         .back-home { display: block; margin-top: 20px; color: #7f8fa6; text-decoration: none; font-size: 14px; }
-        .back-home:hover { color: #dcdde1; }
 
         /* Admin Panel */
-        #admin-panel { display: none; background: #2f3640; padding: 30px; border-radius: 15px; width: 100%; max-width: 600px; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+        #admin-panel { display: none; background: #2f3640; padding: 30px; border-radius: 15px; width: 100%; max-width: 650px; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
         .header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #718093; padding-bottom: 15px; margin-bottom: 20px; flex-wrap: wrap; gap: 10px;}
-        .header h1 { color: #00a8ff; font-size: 24px; margin: 0;}
+        .header h1 { color: #00a8ff; font-size: 22px; margin: 0;}
         .btn-group { display: flex; gap: 10px; }
         
         .home-btn { background: #0097e6; color: white; padding: 8px 15px; border-radius: 5px; font-size: 14px; text-decoration: none; font-weight: bold; }
-        .home-btn:hover { background: #00a8ff; }
         .logout-btn { background: #e84118; color: white; padding: 8px 15px; border-radius: 5px; font-size: 14px; border: none; font-weight: bold; cursor: pointer; }
-        .logout-btn:hover { background: #c23616; }
         
         .admin-card { background: #353b48; padding: 20px; border-radius: 10px; margin-bottom: 15px; border-left: 5px solid #fbc531; }
-        .admin-card h3 { color: #fbc531; margin-bottom: 10px; font-size: 18px; }
-        .admin-card p { color: #dcdde1; font-size: 14px; line-height: 1.6; }
-        .action-link { display: inline-block; margin-top: 10px; color: #4cd137; text-decoration: none; font-size: 14px; font-weight: bold; }
-        .action-link:hover { text-decoration: underline; }
+        .admin-card h3 { color: #fbc531; margin-bottom: 10px; font-size: 16px; }
+        .admin-card p { color: #dcdde1; font-size: 13px; line-height: 1.6; margin-bottom: 10px; }
+        
+        /* Code box */
+        code-box { background: #1e272e; padding: 10px; display: block; border-radius: 5px; font-family: monospace; color: #00cec9; font-size: 12px; word-break: break-all; margin-top: 8px; }
+        .action-link { display: inline-block; margin-top: 10px; color: #4cd137; text-decoration: none; font-size: 13px; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -44,35 +43,38 @@
         <input type="password" id="passInput" placeholder="Enter Password">
         <button onclick="checkPassword()">Login</button>
         <p class="error-msg" id="errorText">தவறான பாஸ்வேர்டு!</p>
-        
-        <!-- பாஸ்வேர்டு போடாமல் திரும்பிச் செல்ல -->
         <a href="index.html" class="back-home">⬅ திரும்பிச் செல்ல</a>
     </div>
 
     <div id="admin-panel">
         <div class="header">
-            <h1>⚙️ Store Admin</h1>
+            <h1>⚙️ Ghowse Store Admin</h1>
             <div class="btn-group">
-                <!-- மெயின் பக்கத்திற்கு செல்ல புதிய பட்டன் -->
                 <a href="index.html" class="home-btn">🏠 Go to Store</a>
                 <button class="logout-btn" onclick="logout()">Logout</button>
             </div>
         </div>
 
+        <!-- 1. PDF அப்லோட் செய்யும் வழிகாட்டி -->
         <div class="admin-card">
-            <h3>📂 PDF ஃபைல்களை மாற்றுவது எப்படி?</h3>
-            <p>புதிய PDF-ஐ சேர்க்க அல்லது பழையதை மாற்ற, உங்களின் GitHub கணக்கிற்குச் சென்று நேரடியாக ஃபைல்களை அப்லோட் (Upload) செய்யவும்.</p>
-            <a href="https://github.com/" target="_blank" class="action-link">Go to GitHub ↗</a>
+            <h3>📂 புதிய PDF-ஐ பக்கங்களில் சேர்ப்பது எப்படி?</h3>
+            <p>1. முதலில் GitHub-ல் உங்கள் PDF ஃபைலை அப்லோட் செய்யவும் (எ.கா: <b>new_bayaan.pdf</b>).</p>
+            <p>2. எந்தப் பக்கத்தில் காட்ட வேண்டுமோ (உதாரணமாக <b>bayaan.html</b>), அந்தப் பக்கத்தின் கோடில் கீழே உள்ள வரியை காப்பி செய்து பேஸ்ட் செய்யவும்:</p>
+            
+            <code>
+                &lt;a href="new_bayaan.pdf" target="_blank" class="pdf-item"&gt;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&lt;div class="pdf-info"&gt;&lt;span class="pdf-icon"&gt;📄&lt;/span&gt;&lt;span class="pdf-title"&gt;உங்கள் புத்தகத்தின் பெயர்&lt;/span&gt;&lt;/div&gt;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&lt;span class="view-btn"&gt;View PDF&lt;/span&gt;<br>
+                &lt;/a&gt;
+            </code>
+            
+            <a href="https://github.com/" target="_blank" class="action-link">Open GitHub to Upload ↗</a>
         </div>
 
-        <div class="admin-card">
-            <h3>📝 விலை அல்லது புத்தகம் சேர்ப்பது எப்படி?</h3>
-            <p>கடையின் மெயின் பக்கத்தில் புதிய புத்தகங்கள் சேர்க்க, GitHub-ல் உள்ள "index.html" ஃபைலை எடிட் (Edit) செய்யவும்.</p>
-        </div>
-        
-        <div class="admin-card" style="border-left-color: #9c88ff;">
-            <h3 style="color: #9c88ff;">📌 உங்களின் தனிப்பட்ட குறிப்புகள்</h3>
-            <p>1. இந்த வாரம் 5 புதிய பயான் PDF சேர்க்க வேண்டும்.<br>2. வாடிக்கையாளர் ரபீக்-க்கு புக் அனுப்ப வேண்டும்.</p>
+        <div class="admin-card" style="border-left-color: #ff4757;">
+            <h3 style="color: #ff4757;">📌 விரைவுப் பக்கங்கள் (Quick Links)</h3>
+            <p>உங்கள் இணையதளப் பக்கங்களை நேரடியாக எடிட் செய்ய:</p>
+            <a href="bayaan.html" target="_blank" class="action-link" style="color: #ff6b81;">View Bayaan Page ↗</a>
         </div>
     </div>
 
