@@ -4,159 +4,76 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ghowse Book Store</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Mukta+Malar:wght@400;700&display=swap" rel="stylesheet">
+    
     <style>
-        /* வலைத்தளத்தின் பின்னணி மற்றும் அடிப்படை அமைப்பு */
-        body { 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            text-align: center; 
-            background-color: #f0f2f5; 
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-        }
-        /* வெள்ளை நிற பெட்டி அமைப்பு */
-        .container { 
-            background: white; 
-            padding: 30px; 
-            border-radius: 15px; 
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
-            width: 100%;
-            max-width: 400px;
-        }
-        /* தலைப்பு எழுத்துக்கள் */
-        h1 { color: #2c3e50; margin-bottom: 5px; font-size: 28px; }
-        p.subtitle { color: #7f8c8d; font-size: 15px; margin-top: 0; margin-bottom: 25px; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Poppins', 'Mukta Malar', sans-serif; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 20px; }
+        .container { background: #ffffff; padding: 40px 30px; border-radius: 20px; box-shadow: 0 15px 30px rgba(0,0,0,0.1); width: 100%; max-width: 420px; position: relative; overflow: hidden; }
+        .header { text-align: center; margin-bottom: 30px; }
         
-        /* 🛍️ Books பார்க்கவும் - தலைப்பு அமைப்பு */
-        .section-title {
-            font-size: 20px;
-            font-weight: bold;
-            color: #d35400;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 2px dashed #e67e22;
-            display: inline-block;
-        }
-
-        /* புத்தகங்களின் பட்டியல் அமைப்பு */
-        .book-menu {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
+        /* ரகசிய லிங்க் அமைப்பு - கையை வைத்தால் பட்டன் என்று தெரியாதபடி cursor: default கொடுக்கப்பட்டுள்ளது */
+        .secret-link { text-decoration: none; display: inline-block; cursor: default; }
+        .store-logo { font-size: 40px; margin-bottom: 10px; transition: transform 0.3s; }
+        .secret-link:active .store-logo { transform: scale(0.9); }
         
-        /* சாதாரண பட்டன்கள் */
-        .book-menu > a {
-            text-decoration: none;
-            background-color: #2980b9;
-            color: white;
-            padding: 15px 20px;
-            border-radius: 10px;
-            font-size: 18px;
-            font-weight: bold;
-            text-align: left;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            transition: background-color 0.3s, transform 0.2s;
-        }
-        .book-menu > a:hover {
-            background-color: #1a5276;
-            transform: translateY(-3px);
-        }
-
-        /* Select / Dropdown பட்டன் (Islamic Books-க்கு மட்டும்) */
-        .custom-select {
-            background-color: #2980b9;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            transition: background-color 0.3s;
-            overflow: hidden;
-            text-align: left;
-        }
-        .custom-select summary {
-            padding: 15px 20px;
-            color: white;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
-            list-style: none; /* அம்பு குறியீட்டை மறைக்க */
-            outline: none;
-        }
-        .custom-select summary::-webkit-details-marker {
-            display: none;
-        }
-        .custom-select[open] summary, .custom-select summary:hover {
-            background-color: #1a5276;
-        }
-        
-        /* Dropdown உள்ளே இருக்கும் ஆப்ஷன்கள் (Bayaan, Kavithai...) */
-        .select-options {
-            background-color: #ecf0f1;
-            display: flex;
-            flex-direction: column;
-        }
-        .select-options a {
-            text-decoration: none;
-            color: #2c3e50;
-            padding: 12px 20px;
-            border-bottom: 1px solid #bdc3c7;
-            font-size: 16px;
-            font-weight: 600;
-            transition: background-color 0.2s;
-        }
-        .select-options a:last-child {
-            border-bottom: none;
-        }
-        .select-options a:hover {
-            background-color: #d0d3d4;
-            padding-left: 25px; /* Hover செய்யும்போது லேசாக நகரும் எஃபெக்ட் */
-        }
-
-        /* தொடர்பு விவரங்கள் */
-        .contact-info {
-            margin-top: 35px;
-            font-size: 15px;
-            color: #555;
-            border-top: 1px solid #ddd;
-            padding-top: 20px;
-            line-height: 1.6;
-        }
+        h1 { color: #1e272e; font-size: 26px; font-weight: 700; margin-bottom: 5px; letter-spacing: 0.5px; }
+        p.subtitle { color: #808e9b; font-size: 14px; }
+        .section-title { font-size: 16px; font-weight: 700; color: #485460; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px; display: flex; align-items: center; }
+        .section-title::after { content: ""; flex: 1; height: 2px; background: #d2dae2; margin-left: 10px; border-radius: 5px; }
+        .menu-list { display: flex; flex-direction: column; gap: 12px; }
+        .menu-list > a, details > summary { background: #ffffff; color: #1e272e; padding: 16px 20px; border-radius: 12px; font-size: 16px; font-weight: 600; text-decoration: none; display: flex; align-items: center; border: 2px solid #ecf0f1; cursor: pointer; transition: all 0.3s ease; position: relative; }
+        .menu-icon { font-size: 20px; margin-right: 15px; }
+        .menu-list > a:hover, details[open] > summary, details > summary:hover { border-color: #0fb9b1; background: #f0fbfb; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(15, 185, 177, 0.15); }
+        details { overflow: hidden; }
+        summary { list-style: none; outline: none; }
+        summary::-webkit-details-marker { display: none; }
+        summary::after { content: "▼"; position: absolute; right: 20px; font-size: 12px; color: #808e9b; transition: transform 0.3s; }
+        details[open] summary::after { transform: rotate(180deg); color: #0fb9b1; }
+        .dropdown-content { background: #f8f9fa; margin: 5px 0 10px 0; border-radius: 10px; border: 1px solid #ecf0f1; overflow: hidden; }
+        .dropdown-content a { color: #485460; padding: 14px 20px 14px 50px; font-size: 15px; font-weight: 600; text-decoration: none; display: block; border-bottom: 1px solid #ecf0f1; transition: 0.2s; }
+        .dropdown-content a:last-child { border-bottom: none; }
+        .dropdown-content a:hover { background: #e1f5fe; color: #0984e3; padding-left: 55px; }
+        .footer { margin-top: 30px; padding-top: 20px; border-top: 2px dashed #ecf0f1; text-align: center; }
+        .contact-btn { background: #2bcbba; color: white; padding: 12px 20px; border-radius: 30px; text-decoration: none; font-weight: 600; font-size: 14px; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 10px rgba(43, 203, 186, 0.3); transition: 0.3s; }
+        .contact-btn:hover { background: #0fb9b1; transform: scale(1.05); }
     </style>
 </head>
 <body>
+
     <div class="container">
-        <!-- கடையின் பெயர் -->
-        <h1>Ghowse Book Store</h1>
-        <p class="subtitle">சிறந்த புத்தகங்கள், குறைவான விலையில்!</p>
         
-        <!-- புத்தகங்கள் தலைப்பு -->
-        <div class="section-title">🛍️ Books பார்க்கவும்</div>
+        <div class="header">
+            <!-- இந்த லோகோவை க்ளிக் செய்தால் Admin பக்கம் (dashboard.html) திறக்கும் -->
+            <a href="mga_store_admin_page.html" class="secret-link" title="Click here for Admin">
+                <div class="store-logo">📖</div>
+            </a>
+            <h1>Ghowse Book Store</h1>
+            <p class="subtitle">அறிவின் தேடல் தொடங்கும் இடம்</p>
+        </div>
         
-        <!-- வரிசையான புத்தகங்களின் பட்டன்கள் -->
-        <div class="book-menu">
-            
-            <!-- Select Button for Islamic Books -->
-            <details class="custom-select">
-                <summary>📚 Islamic Books ▾</summary>
-                <div class="select-options">
-                    <a href="bayan.html">🎙️ Bayaan (பயான்)</a>
-                    <a href="#">✍️ Kavithai (கவிதை)</a>
-                    <a href="#">📖 Kathai (கதை)</a>
+        <div class="section-title">Categories</div>
+        
+        <div class="menu-list">
+            <details>
+                <summary><span class="menu-icon">🕌</span> Islamic Books</summary>
+                <div class="dropdown-content">
+                    <a href="bayaan.html">🎙️ பயான் (Bayaan)</a>
+                    <a href="#">✍️ கவிதை (Kavithai)</a>
+                    <a href="#">📖 கதை (Kathai)</a>
                 </div>
             </details>
-
-            <a href="#">📘 Tamil Books</a>
-            <a href="#">👶 Kids Books</a>
-            <a href="#">📕 School Books</a>
+            <a href="#"><span class="menu-icon">📘</span> Tamil Books</a>
+            <a href="#"><span class="menu-icon">👶</span> Kids Books</a>
+            <a href="#"><span class="menu-icon">🎒</span> School Books</a>
         </div>
 
-        <!-- கடை முகவரி மற்றும் தொடர்புக்கு -->
-        <div class="contact-info">
-            <b>தொடர்புக்கு:</b><br>
-            📞 +91 9159345783 <br>
-            ✉️ ghowsebooks@email.com
+        <div class="footer">
+            <a href="tel:+919159345783" class="contact-btn">📞 Call Us Now</a>
+            <p style="margin-top: 15px; font-size: 12px; color: #a4b0be;">ghowsebooks@email.com</p>
         </div>
+
     </div>
+
 </body>
 </html>
-
