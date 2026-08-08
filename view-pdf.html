@@ -3,113 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PDF Viewer - Ghowse Book Store</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Mukta+Malar:wght@400;700&display=swap" rel="stylesheet">
-    
+    <title>Read Book</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { 
-            font-family: 'Poppins', 'Mukta Malar', sans-serif; 
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-
-        /* பிரதான பெட்டி (Main Container) */
-        .container { 
-            background: #ffffff; 
-            padding: 25px; 
-            border-radius: 20px; 
-            box-shadow: 0 15px 30px rgba(0,0,0,0.1); 
-            width: 100%;
-            max-width: 500px;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        /* Back to Home பட்டன் */
-        .back-btn {
-            align-self: flex-start;
-            text-decoration: none;
-            color: #808e9b;
-            font-weight: 600;
-            font-size: 14px;
-            transition: color 0.3s;
-        }
-        .back-btn:hover { color: #0fb9b1; }
-        .back-btn::before { content: "← "; font-weight: bold; }
-
-        /* Title Here (புத்தகத்தின் தலைப்பு) */
-        .pdf-title {
-            color: #1e272e;
-            font-size: 20px;
-            font-weight: 700;
-            text-align: center;
-            margin-top: 5px;
-        }
-
-        /* Download பட்டன் */
-        .download-btn {
-            background: #2bcbba;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 14px;
-            text-align: center;
-            display: inline-block;
-            transition: 0.3s;
-            align-self: center;
-            box-shadow: 0 4px 10px rgba(43, 203, 186, 0.3);
-        }
-        .download-btn:hover {
-            background: #0fb9b1;
-            transform: translateY(-2px);
-        }
-
-        /* PDF Here (PDF Viewer Box - வரைபடத்தில் உள்ள நடுப் பெட்டி) */
-        .pdf-viewer-box {
-            width: 100%;
-            height: 400px;
-            border: 2px solid #ecf0f1;
-            border-radius: 12px;
-            overflow: hidden;
-            background: #f8f9fa;
-        }
-
-        .pdf-viewer-box iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
+        body { background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 20px; }
+        .container { background: #ffffff; padding: 20px; border-radius: 20px; width: 100%; max-width: 800px; height: 90vh; box-shadow: 0 15px 30px rgba(0,0,0,0.1); display: flex; flex-direction: column; }
+        
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 2px dashed #ecf0f1; padding-bottom: 10px; }
+        .back-btn { text-decoration: none; color: #808e9b; font-weight: 600; font-size: 14px; cursor: pointer; }
+        .back-btn:hover { color: #2c3e50; }
+        
+        h2 { color: #1e272e; font-size: 18px; text-align: center; flex-grow: 1; margin: 0 10px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+        
+        iframe { flex-grow: 1; width: 100%; border: 2px solid #ecf0f1; border-radius: 12px; background: #f8f9fa; }
+        
+        .download-btn { background: #3ecf8e; color: white; text-align: center; padding: 12px; border-radius: 8px; text-decoration: none; font-weight: bold; margin-top: 15px; display: block; transition: 0.3s; font-size: 15px; }
+        .download-btn:hover { background: #34b27b; }
+        
+        .error-msg { text-align: center; color: #e74c3c; margin-top: 50px; font-weight: bold; display: none; }
     </style>
 </head>
 <body>
 
     <div class="container">
-        
-        <!-- 1. Back to Home -->
-        <a href="bayan.html" class="back-btn">Back</a>
-        
-        <!-- 2. Title Here (புத்தகத்தின் தலைப்பு) -->
-        <h2 class="pdf-title">📚 ரமலான் சிறப்பு பயான் (Title Here)</h2>
-        
-        <!-- 3. Download Button -->
-        <a href="bayaan1.pdf" download class="download-btn">📥 Download PDF</a>
-        
-        <!-- 4. PDF Here (நடுவில் PDF தெரியும் பகுதி) -->
-        <div class="pdf-viewer-box">
-            <!-- bayaan.pdf என்பதற்கு பதிலாக உங்கள் PDF ஃபைல் பெயரைப் போடவும் -->
-            <iframe src="https://drive.google.com/file/d/1iy9EpV7en-uj1cUnoBB0z3k845jWyYKV/view?usp=drivesdk"></iframe>
+        <div class="header">
+            <!-- வந்த பக்கத்துக்கே திரும்பச் செல்லும் பட்டன் -->
+            <a onclick="history.back()" class="back-btn">← Back</a>
+            <h2 id="bookTitle">Loading...</h2>
+            <div style="width: 50px;"></div> <!-- லேஅவுட் சென்டராக இருக்க ஒரு சிறிய இடைவெளி -->
         </div>
-
+        
+        <p id="errorMsg" class="error-msg">புத்தகம் கிடைக்கவில்லை அல்லது லிங்க் தவறானது!</p>
+        
+        <iframe id="pdfViewer" src=""></iframe>
+        
+        <a id="downloadBtn" href="#" target="_blank" class="download-btn">Download / Open in New Tab</a>
     </div>
 
+    <script>
+        // URL-ல் இருந்து Title மற்றும் File லிங்கை எடுக்கும் கோட்
+        const urlParams = new URLSearchParams(window.location.search);
+        const title = urlParams.get('title');
+        let fileUrl = urlParams.get('file');
+
+        if (title && fileUrl) {
+            document.getElementById('bookTitle').innerText = title;
+            document.getElementById('downloadBtn').href = fileUrl;
+
+            // Google Drive லிங்காக இருந்தால், அதை Embed செய்வதற்கு ஏற்றவாறு (Preview) மாற்றுதல்
+            if (fileUrl.includes('drive.google.com/file/d/')) {
+                const match = fileUrl.match(/\/d\/([a-zA-Z0-9_-]+)/);
+                if (match && match[1]) {
+                    fileUrl = `https://drive.google.com/file/d/${match[1]}/preview`;
+                }
+            }
+
+            // PDF அல்லது Drive லிங்கை iframe-ல் செட் செய்தல்
+            document.getElementById('pdfViewer').src = fileUrl;
+        } else {
+            // Title அல்லது File லிங்க் இல்லை என்றால் பிழையை காட்டுதல்
+            document.getElementById('bookTitle').innerText = "பிழை!";
+            document.getElementById('pdfViewer').style.display = "none";
+            document.getElementById('downloadBtn').style.display = "none";
+            document.getElementById('errorMsg').style.display = "block";
+        }
+    </script>
 </body>
 </html>
-
