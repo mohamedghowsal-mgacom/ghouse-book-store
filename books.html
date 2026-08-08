@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Books List - Supabase</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
+        body { background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 20px; }
+        .container { background: #ffffff; padding: 30px; border-radius: 20px; width: 100%; max-width: 450px; box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
+        .back-btn { text-decoration: none; color: #808e9b; font-weight: 600; font-size: 14px; display: inline-block; margin-bottom: 15px; }
+        h2 { color: #1e272e; font-size: 22px; margin-bottom: 20px; border-bottom: 2px dashed #ecf0f1; padding-bottom: 10px; }
+        .pdf-list { display: flex; flex-direction: column; gap: 15px; }
+        .pdf-item { background: #f8f9fa; border: 2px solid #ecf0f1; padding: 15px; border-radius: 12px; display: flex; align-items: center; justify-content: space-between; text-decoration: none; transition: 0.3s; }
+        .pdf-item:hover { border-color: #3ecf8e; background: #f0fbfb; }
+        .pdf-title { color: #2c3e50; font-size: 15px; font-weight: 600; }
+        .view-btn { background: #3ecf8e; color: white; padding: 8px 12px; border-radius: 8px; font-size: 12px; font-weight: bold; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+    <div class="container">
+        <a href="index.html" class="back-btn">← Back to Home</a>
+        <h2 id="pageHeading">📚 புத்தகங்கள் பட்டியல்</h2>
+        
+        <div class="pdf-list" id="bookContainer">
+            <p style="text-align: center; color: #808e9b;">Loading from Supabase...</p>
+        </div>
+    </div>
+
+    <script>
+        const SUPABASE_URL = 'https://vsapcaxdubtevuwhtjzt.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZzYXBjYXhkdWJ0ZXZ1d2h0anp0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYxODA1NjEsImV4cCI6MjEwMTc1NjU2MX0.Se3wswPII6i8AnBN2WpJK3Fm5ScdKoN8zqcDmAXebII';
+        
+        const { createClient } = supabase;
+        const _supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const currentCategory = urlParams.get('cat') || 'bayan'; 
+
+        async function loadBooks() {
+            const container = document.getElementById("bookContainer");
+            container.innerHTML = "";
+
+            const { data: books, error } = await _supabase
+                .from('books')
+                .select('*')
+                .eq('category', currentCategory);
+
+            if (error) {
+                container.innerHTML = "<p style='color:red; text-align:center;'>தரவுகளை ஏற்றுவதில் பிழை.</p>";
+                return;
+            }
+
+            if (!books || books.length === 0) {
+                container.innerHTML = "<p style='color:#808e9b; text-align:center;'>புத்தகங்கள் எதுவும் இல்லை.</p>";
+                return;
+            }
+
+            books.forEach((book) => {
+                let item = document.createElement("a");
+                item.className = "pdf-item";
+                item.href = `view-pdf.html?title=${encodeURIComponent(book.title)}&file=${encodeURIComponent(book.file)}`;
+                
+                item.innerHTML = `
+                    <div style="display:flex; align-items:center; gap:10px;">
+                        <span style="font-size:22px;">📄</span>
+                        <span class="pdf-title">${book.title}</span>
+                    </div>
+                    <span class="view-btn">View PDF</span>
+                `;
+                container.appendChild(item);
+            });
+        }
+
+        loadBooks();
+    </script>
+</body>
+</html>
+
