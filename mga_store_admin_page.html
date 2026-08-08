@@ -3,103 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard - Ghowse Books</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>Supabase Admin Panel</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Poppins', sans-serif; background: #1e272e; color: white; min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 20px; }
-        
-        /* Login Screen */
-        #login-screen { background: #2f3640; padding: 40px; border-radius: 15px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.5); width: 100%; max-width: 350px; }
-        #login-screen h2 { color: #fbc531; margin-bottom: 20px; font-size: 22px; }
-        input[type="password"] { width: 100%; padding: 12px; margin-bottom: 20px; border: none; border-radius: 8px; font-size: 16px; outline: none; text-align: center; }
-        button { background: #4cd137; color: white; border: none; padding: 12px 20px; width: 100%; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.3s; }
-        button:hover { background: #44bd32; }
-        .error-msg { color: #e84118; font-size: 14px; display: none; margin-top: 10px; }
-        .back-home { display: block; margin-top: 20px; color: #7f8fa6; text-decoration: none; font-size: 14px; }
-
-        /* Admin Panel */
-        #admin-panel { display: none; background: #2f3640; padding: 30px; border-radius: 15px; width: 100%; max-width: 650px; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
-        .header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #718093; padding-bottom: 15px; margin-bottom: 20px; flex-wrap: wrap; gap: 10px;}
-        .header h1 { color: #00a8ff; font-size: 22px; margin: 0;}
-        .btn-group { display: flex; gap: 10px; }
-        
-        .home-btn { background: #0097e6; color: white; padding: 8px 15px; border-radius: 5px; font-size: 14px; text-decoration: none; font-weight: bold; }
-        .logout-btn { background: #e84118; color: white; padding: 8px 15px; border-radius: 5px; font-size: 14px; border: none; font-weight: bold; cursor: pointer; }
-        
-        .admin-card { background: #353b48; padding: 20px; border-radius: 10px; margin-bottom: 15px; border-left: 5px solid #fbc531; }
-        .admin-card h3 { color: #fbc531; margin-bottom: 10px; font-size: 16px; }
-        .admin-card p { color: #dcdde1; font-size: 13px; line-height: 1.6; margin-bottom: 10px; }
-        
-        /* Code box */
-        code-box { background: #1e272e; padding: 10px; display: block; border-radius: 5px; font-family: monospace; color: #00cec9; font-size: 12px; word-break: break-all; margin-top: 8px; }
-        .action-link { display: inline-block; margin-top: 10px; color: #4cd137; text-decoration: none; font-size: 13px; font-weight: bold; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
+        body { background: #1e272e; color: white; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
+        .admin-box { background: #2f3640; padding: 30px; border-radius: 15px; width: 100%; max-width: 450px; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+        h2 { color: #fbc531; margin-bottom: 20px; text-align: center; }
+        label { display: block; margin-bottom: 5px; font-size: 14px; color: #dcdde1; }
+        input, select { width: 100%; padding: 10px; margin-bottom: 15px; border-radius: 8px; border: none; background: #353b48; color: white; font-size: 14px; }
+        button { background: #3ecf8e; color: white; border: none; padding: 12px; width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 16px; }
+        button:hover { background: #34b27b; }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
-    <div id="login-screen">
-        <h2>🔒 Admin Access</h2>
-        <input type="password" id="passInput" placeholder="Enter Password">
-        <button onclick="checkPassword()">Login</button>
-        <p class="error-msg" id="errorText">தவறான பாஸ்வேர்டு!</p>
-        <a href="index.html" class="back-home">⬅ திரும்பிச் செல்ல</a>
-    </div>
+    <div class="admin-box">
+        <h2>⚡ Supabase Book Upload</h2>
+        
+        <label>புத்தகத்தின் தலைப்பு (Title)</label>
+        <input type="text" id="bookTitle" placeholder="எ.கா: ரமலான் பயான்">
 
-    <div id="admin-panel">
-        <div class="header">
-            <h1>⚙️ Ghowse Store Admin</h1>
-            <div class="btn-group">
-                <a href="index.html" class="home-btn">🏠 Go to Store</a>
-                <button class="logout-btn" onclick="logout()">Logout</button>
-            </div>
-        </div>
+        <label>பிரிவு (Category)</label>
+        <select id="bookCategory">
+            <option value="bayan">Bayaan (பயான்)</option>
+            <option value="kavithai">Kavithai (கவிதை)</option>
+            <option value="kathai">Kathai (கதை)</option>
+            <option value="tamil">Tamil Books (தமிழ்)</option>
+            <option value="kids">Kids Books (குழந்தைகள்)</option>
+            <option value="school">School Books (பள்ளி)</option>
+        </select>
 
-        <!-- 1. PDF அப்லோட் செய்யும் வழிகாட்டி -->
-        <div class="admin-card">
-            <h3>📂 புதிய PDF-ஐ பக்கங்களில் சேர்ப்பது எப்படி?</h3>
-            <p>1. முதலில் GitHub-ல் உங்கள் PDF ஃபைலை அப்லோட் செய்யவும் (எ.கா: <b>new_bayaan.pdf</b>).</p>
-            <p>2. எந்தப் பக்கத்தில் காட்ட வேண்டுமோ (உதாரணமாக <b>bayaan.html</b>), அந்தப் பக்கத்தின் கோடில் கீழே உள்ள வரியை காப்பி செய்து பேஸ்ட் செய்யவும்:</p>
-            
-            <code>
-                &lt;a href="new_bayaan.pdf" target="_blank" class="pdf-item"&gt;<br>
-                &nbsp;&nbsp;&nbsp;&nbsp;&lt;div class="pdf-info"&gt;&lt;span class="pdf-icon"&gt;📄&lt;/span&gt;&lt;span class="pdf-title"&gt;உங்கள் புத்தகத்தின் பெயர்&lt;/span&gt;&lt;/div&gt;<br>
-                &nbsp;&nbsp;&nbsp;&nbsp;&lt;span class="view-btn"&gt;View PDF&lt;/span&gt;<br>
-                &lt;/a&gt;
-            </code>
-            
-            <a href="https://github.com/" target="_blank" class="action-link">Open GitHub to Upload ↗</a>
-        </div>
+        <label>PDF / Google Drive Link</label>
+        <input type="text" id="bookFile" placeholder="Drive Link அல்லது PDF URL">
 
-        <div class="admin-card" style="border-left-color: #ff4757;">
-            <h3 style="color: #ff4757;">📌 விரைவுப் பக்கங்கள் (Quick Links)</h3>
-            <p>உங்கள் இணையதளப் பக்கங்களை நேரடியாக எடிட் செய்ய:</p>
-            <a href="bayaan.html" target="_blank" class="action-link" style="color: #ff6b81;">View Bayaan Page ↗</a>
-        </div>
+        <button onclick="uploadBook()">Save to Supabase</button>
     </div>
 
     <script>
-        const secretPassword = "786"; // உங்கள் பாஸ்வேர்டு
+        const SUPABASE_URL = 'https://vsapcaxdubtevuwhtjzt.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZzYXBjYXhkdWJ0ZXZ1d2h0anp0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYxODA1NjEsImV4cCI6MjEwMTc1NjU2MX0.Se3wswPII6i8AnBN2WpJK3Fm5ScdKoN8zqcDmAXebII';
+        
+        const { createClient } = supabase;
+        const _supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-        function checkPassword() {
-            let userPass = document.getElementById("passInput").value;
-            let error = document.getElementById("errorText");
-            let loginScreen = document.getElementById("login-screen");
-            let adminPanel = document.getElementById("admin-panel");
+        window.uploadBook = async function() {
+            let title = document.getElementById("bookTitle").value;
+            let category = document.getElementById("bookCategory").value;
+            let file = document.getElementById("bookFile").value;
 
-            if(userPass === secretPassword) {
-                loginScreen.style.display = "none";
-                adminPanel.style.display = "block";
-            } else {
-                error.style.display = "block";
+            if(!title || !file) {
+                alert("அனைத்து கட்டங்களையும் நிரப்பவும்!");
+                return;
             }
-        }
 
-        function logout() {
-            document.getElementById("passInput").value = "";
-            document.getElementById("errorText").style.display = "none";
-            document.getElementById("admin-panel").style.display = "none";
-            document.getElementById("login-screen").style.display = "block";
+            const { data, error } = await _supabase
+                .from('books')
+                .insert([{ title: title, category: category, file: file }]);
+
+            if (error) {
+                alert("பிழை ஏற்பட்டது: " + error.message);
+            } else {
+                alert("புத்தகம் வெற்றிகரமாக Supabase-ல் சேமிக்கப்பட்டது!");
+                document.getElementById("bookTitle").value = "";
+                document.getElementById("bookFile").value = "";
+            }
         }
     </script>
 </body>
