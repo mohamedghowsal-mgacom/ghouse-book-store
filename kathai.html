@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kathai Books - Ghowse Book Store</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Mukta+Malar:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { 
+            font-family: 'Poppins', 'Mukta Malar', sans-serif; 
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .container { 
+            background: #ffffff; 
+            padding: 30px 25px; 
+            border-radius: 20px; 
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1); 
+            width: 100%;
+            max-width: 450px;
+        }
+
+        /* Back பட்டன் */
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            text-decoration: none;
+            color: #808e9b;
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 20px;
+            transition: color 0.3s;
+        }
+        .back-btn:hover { color: #0fb9b1; }
+        .back-btn::before { content: "←"; margin-right: 8px; font-size: 18px; }
+
+        /* தலைப்பு */
+        h2 { color: #1e272e; font-size: 22px; margin-bottom: 5px; }
+        p.subtitle { color: #808e9b; font-size: 13px; margin-bottom: 25px; border-bottom: 2px dashed #ecf0f1; padding-bottom: 15px; }
+
+        /* PDF லிஸ்ட் */
+        .pdf-list { display: flex; flex-direction: column; gap: 15px; }
+        
+        .pdf-item {
+            background: #ffffff;
+            border: 2px solid #ecf0f1;
+            padding: 15px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        .pdf-item:hover {
+            border-color: #2bcbba;
+            background: #f0fbfb;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(43, 203, 186, 0.15);
+        }
+
+        .pdf-info { display: flex; align-items: center; gap: 12px; }
+        .pdf-icon { font-size: 24px; }
+        .pdf-title { color: #2c3e50; font-size: 15px; font-weight: 600; }
+        
+        .view-btn {
+            background: #2bcbba;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .pdf-item:hover .view-btn { background: #0fb9b1; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <!-- முதல் பக்கத்திற்கு திரும்ப -->
+        <a href="index.html" class="back-btn">Back to Home</a>
+        
+        <h2>📖 கதை தொகுப்புகள்</h2>
+        <p class="subtitle">படிக்க வேண்டிய PDF-ஐ தேர்ந்தெடுக்கவும்</p>
+        
+        <div class="pdf-list">
+            
+            <!-- PDF 1 -->
+            <a href="kathai1.pdf" target="_blank" class="pdf-item">
+                <div class="pdf-info">
+                    <span class="pdf-icon">📄</span>
+                    <span class="pdf-title">1. வரலாற்று கதைகள்</span>
+                </div>
+                <span class="view-btn">View PDF</span>
+            </a>
+
+            <!-- PDF 2 -->
+            <a href="kathai2.pdf" target="_blank" class="pdf-item">
+                <div class="pdf-info">
+                    <span class="pdf-icon">📄</span>
+                    <span class="pdf-title">2. நீதி கதைகள்</span>
+                </div>
+                <span class="view-btn">View PDF</span>
+            </a>
+
+        </div>
+
+    </div>
+
+</body>
+</html>
+
