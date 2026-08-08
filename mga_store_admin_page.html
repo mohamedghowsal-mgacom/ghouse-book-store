@@ -42,6 +42,7 @@
     </div>
 
     <script>
+        // உங்கள் Supabase URL மற்றும் Anon Key-ஐ இங்கே சரியாகப் போடவும்
         const SUPABASE_URL = 'https://vsapcaxdubtevuwhtjzt.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZzYXBjYXhkdWJ0ZXZ1d2h0anp0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYxODA1NjEsImV4cCI6MjEwMTc1NjU2MX0.Se3wswPII6i8AnBN2WpJK3Fm5ScdKoN8zqcDmAXebII';
         
@@ -58,8 +59,6 @@
                 return;
             }
 
-            console.log("Sending data...", { title, category, file });
-
             const { data, error } = await _supabase
                 .from('books')
                 .insert([
@@ -67,7 +66,6 @@
                 ]);
 
             if (error) {
-                console.error("Supabase Error:", error);
                 alert("பிழை ஏற்பட்டது: " + error.message);
             } else {
                 alert("புத்தகம் வெற்றிகரமாக Supabase-ல் சேமிக்கப்பட்டது!");
