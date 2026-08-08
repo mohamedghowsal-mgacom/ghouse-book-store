@@ -27,7 +27,7 @@
 
         <label>பிரிவு (Category)</label>
         <select id="bookCategory">
-            <option value="bayan">Bayaan (பயான்)</option>
+            <option value="bayan">Bayan (பயான்)</option>
             <option value="kavithai">Kavithai (கவிதை)</option>
             <option value="kathai">Kathai (கதை)</option>
             <option value="tamil">Tamil Books (தமிழ்)</option>
@@ -49,20 +49,25 @@
         const _supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
         window.uploadBook = async function() {
-            let title = document.getElementById("bookTitle").value;
+            let title = document.getElementById("bookTitle").value.trim();
             let category = document.getElementById("bookCategory").value;
-            let file = document.getElementById("bookFile").value;
+            let file = document.getElementById("bookFile").value.trim();
 
             if(!title || !file) {
                 alert("அனைத்து கட்டங்களையும் நிரப்பவும்!");
                 return;
             }
 
+            console.log("Sending data...", { title, category, file });
+
             const { data, error } = await _supabase
                 .from('books')
-                .insert([{ title: title, category: category, file: file }]);
+                .insert([
+                    { title: title, category: category, file: file }
+                ]);
 
             if (error) {
+                console.error("Supabase Error:", error);
                 alert("பிழை ஏற்பட்டது: " + error.message);
             } else {
                 alert("புத்தகம் வெற்றிகரமாக Supabase-ல் சேமிக்கப்பட்டது!");
