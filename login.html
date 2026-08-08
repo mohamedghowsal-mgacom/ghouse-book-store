@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Ghowse Book Store</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Mukta+Malar:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Poppins', 'Mukta Malar', sans-serif; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 20px; }
+        .container { background: #ffffff; padding: 30px; border-radius: 20px; box-shadow: 0 15px 30px rgba(0,0,0,0.1); width: 100%; max-width: 400px; text-align: center; }
+        
+        .logo { font-size: 45px; margin-bottom: 5px; }
+        h2 { color: #1e272e; font-size: 22px; font-weight: 700; margin-bottom: 5px; }
+        p.subtitle { color: #808e9b; font-size: 13px; margin-bottom: 25px; }
+        
+        /* Google Button */
+        .btn-google { background: #ffffff; color: #485460; border: 2px solid #ecf0f1; padding: 12px; width: 100%; border-radius: 10px; font-size: 15px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; transition: 0.3s; margin-bottom: 20px; }
+        .btn-google:hover { background: #f8f9fa; border-color: #d2dae2; }
+        .btn-google img { width: 20px; }
+
+        /* Divider */
+        .divider { display: flex; align-items: center; text-align: center; margin-bottom: 20px; color: #a4b0be; font-size: 13px; font-weight: 500; }
+        .divider::before, .divider::after { content: ''; flex: 1; border-bottom: 1px solid #ecf0f1; }
+        .divider::before { margin-right: .5em; }
+        .divider::after { margin-left: .5em; }
+
+        /* Tabs */
+        .tabs { display: flex; background: #f1f2f6; border-radius: 10px; margin-bottom: 20px; padding: 5px; }
+        .tab-btn { flex: 1; padding: 10px; border: none; background: transparent; font-size: 14px; font-weight: 600; color: #808e9b; border-radius: 8px; cursor: pointer; transition: 0.3s; }
+        .tab-btn.active { background: #ffffff; color: #0fb9b1; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+
+        .input-group { text-align: left; margin-bottom: 15px; }
+        .input-group label { display: block; font-size: 13px; font-weight: 600; color: #485460; margin-bottom: 6px; }
+        .input-group input { width: 100%; padding: 12px; border: 2px solid #ecf0f1; border-radius: 10px; font-size: 14px; outline: none; transition: 0.3s; }
+        .input-group input:focus { border-color: #0fb9b1; background: #f0fbfb; }
+        
+        .btn { width: 100%; padding: 14px; border: none; border-radius: 10px; font-size: 15px; font-weight: 600; cursor: pointer; transition: 0.3s; margin-bottom: 10px; display: block; }
+        .btn-login { background: #0fb9b1; color: white; box-shadow: 0 4px 15px rgba(15, 185, 177, 0.3); }
+        .btn-login:hover { background: #0c9c95; transform: translateY(-2px); }
+        .btn-signup { background: #ffffff; color: #0fb9b1; border: 2px solid #0fb9b1; }
+        .btn-signup:hover { background: #f0fbfb; }
+        
+        #msgBox { margin-top: 15px; font-size: 13px; font-weight: 600; display: none; padding: 10px; border-radius: 8px; }
+        .error { background: #ffeaa7; color: #d63031; }
+        .success { background: #dff9fb; color: #22a6b3; }
+        
+        .back-link { display: inline-block; margin-top: 15px; font-size: 13px; color: #808e9b; text-decoration: none; font-weight: 600; }
+        .back-link:hover { color: #1e272e; }
+    </style>
+    
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+    <div class="container">
+        <div class="logo">📖</div>
+        <h2>Welcome to Store</h2>
+        <p class="subtitle">உள்நுழைய ஒரு வழியைத் தேர்ந்தெடுக்கவும்</p>
+        
+        <!-- Continue with Google Button -->
+        <button class="btn-google" onclick="loginWithGoogle()">
+            <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google">
+            Continue with Google
+        </button>
+
+        <div class="divider">OR</div>
+
+        <!-- Login Type Tabs -->
+        <div class="tabs">
+            <button class="tab-btn active" id="tabEmail" onclick="switchTab('email')">Email Login</button>
+            <button class="tab-btn" id="tabMobile" onclick="switchTab('mobile')">Mobile Login</button>
+        </div>
+
+        <!-- Email Section -->
+        <div id="emailSection">
+            <div class="input-group">
+                <label>Email Address</label>
+                <input type="email" id="email" placeholder="உங்களது மின்னஞ்சல்">
+            </div>
+            <div class="input-group">
+                <label>Password</label>
+                <input type="password" id="password" placeholder="பாஸ்வேர்டு">
+            </div>
+            <button class="btn btn-login" onclick="loginUser()">Login (உள்நுழைய)</button>
+            <button class="btn btn-signup" onclick="signUpUser()">Create Account</button>
+        </div>
+
+        <!-- Mobile Section -->
+        <div id="mobileSection" style="display: none;">
+            <div class="input-group">
+                <label>Mobile Number (with country code)</label>
+                <input type="tel" id="phone" placeholder="+91 9876543210">
+            </div>
+            <button class="btn btn-login" id="btnSendOtp" onclick="sendOTP()">Send OTP</button>
+
+            <!-- OTP Input (Hidden initially) -->
+            <div id="otpGroup" style="display: none;">
+                <div class="input-group" style="margin-top: 15px;">
+                    <label>Enter OTP</label>
+                    <input type="text" id="otp" placeholder="123456">
+                </div>
+                <button class="btn btn-signup" onclick="verifyOTP()">Verify OTP</button>
+            </div>
+        </div>
+        
+        <div id="msgBox"></div>
+
+        <a href="index.html" class="back-link">← Back to Home</a>
+    </div>
+
+    <script>
+        const SUPABASE_URL = 'https://vsapcaxdubtevuwhtjzt.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZzYXBjYXhkdWJ0ZXZ1d2h0anp0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYxODA1NjEsImV4cCI6MjEwMTc1NjU2MX0.Se3wswPII6i8AnBN2WpJK3Fm5ScdKoN8zqcDmAXebII';
+        
+        const { createClient } = supabase;
+        const _supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        function showMessage(msg, type) {
+            const msgBox = document.getElementById('msgBox');
+            msgBox.innerText = msg;
+            msgBox.className = type; 
+            msgBox.style.display = 'block';
+        }
+
+        // Tab Switching Logic
+        function switchTab(tab) {
+            document.getElementById('msgBox').style.display = 'none'; // clear messages
+            if (tab === 'email') {
+                document.getElementById('emailSection').style.display = 'block';
+                document.getElementById('mobileSection').style.display = 'none';
+                document.getElementById('tabEmail').classList.add('active');
+                document.getElementById('tabMobile').classList.remove('active');
+            } else {
+                document.getElementById('emailSection').style.display = 'none';
+                document.getElementById('mobileSection').style.display = 'block';
+                document.getElementById('tabEmail').classList.remove('active');
+                document.getElementById('tabMobile').classList.add('active');
+            }
+        }
+
+        /* 1. Google Login */
+        async function loginWithGoogle() {
+            const { data, error } = await _supabase.auth.signInWithOAuth({
+                provider: 'google',
+            });
+            if (error) showMessage("Google Login Error: " + error.message, "error");
+        }
+
+        /* 2. Email Login & Signup */
+        async function loginUser() {
+            const email = document.getElementById("email").value.trim();
+            const password = document.getElementById("password").value.trim();
+            if (!email || !password) return showMessage("Email மற்றும் Password-ஐ உள்ளிடவும்!", "error");
+            
+            showMessage("Loading...", "success");
+            const { data, error } = await _supabase.auth.signInWithPassword({ email, password });
+            
+            if (error) showMessage("பிழை: " + error.message, "error");
+            else {
+                showMessage("Login Success!", "success");
+                setTimeout(() => window.location.href = "index.html", 1000);
+            }
+        }
+
+        async function signUpUser() {
+            const email = document.getElementById("email").value.trim();
+            const password = document.getElementById("password").value.trim();
+            if (!email || !password) return showMessage("Email மற்றும் Password-ஐ உள்ளிடவும்!", "error");
+            
+            showMessage("Creating account...", "success");
+            const { data, error } = await _supabase.auth.signUp({ email, password });
+            
+            if (error) showMessage("பிழை: " + error.message, "error");
+            else showMessage("கணக்கு உருவாக்கப்பட்டது! Login பட்டனை அழுத்தலாம்.", "success");
+        }
+
+        /* 3. Mobile OTP Login */
+        async function sendOTP() {
+            const phone = document.getElementById("phone").value.trim();
+            if (!phone) return showMessage("தயவுசெய்து மொபைல் எண்ணை உள்ளிடவும் (+91 உடன்)", "error");
+            
+            showMessage("Sending OTP...", "success");
+            const { data, error } = await _supabase.auth.signInWithOtp({ phone });
+            
+            if (error) {
+                showMessage("பிழை: " + error.message, "error");
+            } else {
+                showMessage("OTP அனுப்பப்பட்டது! தயவுசெய்து சரிபார்க்கவும்.", "success");
+                document.getElementById("btnSendOtp").style.display = "none";
+                document.getElementById("otpGroup").style.display = "block";
+            }
+        }
+
+        async function verifyOTP() {
+            const phone = document.getElementById("phone").value.trim();
+            const otp = document.getElementById("otp").value.trim();
+            if (!otp) return showMessage("தயவுசெய்து OTP-ஐ உள்ளிடவும்", "error");
+            
+            showMessage("Verifying...", "success");
+            const { data, error } = await _supabase.auth.verifyOtp({ phone, token: otp, type: 'sms' });
+            
+            if (error) {
+                showMessage("பிழை: தவறான OTP. " + error.message, "error");
+            } else {
+                showMessage("Login Success!", "success");
+                setTimeout(() => window.location.href = "index.html", 1000);
+            }
+        }
+    </script>
+</body>
+  </html>
+
